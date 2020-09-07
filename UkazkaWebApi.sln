@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30413.136
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UkazkaWebApi", "UkazkaWebApi\UkazkaWebApi.csproj", "{20C8629C-D63F-4E24-B699-E78A9B40F3CB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{20C8629C-D63F-4E24-B699-E78A9B40F3CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{20C8629C-D63F-4E24-B699-E78A9B40F3CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{20C8629C-D63F-4E24-B699-E78A9B40F3CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{20C8629C-D63F-4E24-B699-E78A9B40F3CB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1FC9EBF9-1BD3-4CAF-B73F-A266F0020627}
+	EndGlobalSection
+EndGlobal
