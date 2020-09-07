@@ -5,13 +5,21 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using UkazkaWebApi.Model;
 
 namespace UkazkaWebApi.Controllers
 {
 	[ApiController]
 	public class InfectedController : Controller
 	{
+		private readonly MyDbContext dbContext;
+
 		private static List<Infected> InfectedItems { get; } = new List<Infected>();
+
+		public InfectedController(MyDbContext dbContext)
+		{
+			this.dbContext = dbContext;
+		}
 
 		[HttpPost("api/infected/new")]
 		public int CreateInfected([FromBody] InfectedIM inputModel)
@@ -21,11 +29,12 @@ namespace UkazkaWebApi.Controllers
 				Email = inputModel.Email,
 				City = inputModel.City,
 				TestDate = inputModel.TestDate,
-				Id = new Random().Next(),
+				// Id = new Random().Next(),
 				ClientIpAddress = this.HttpContext.Connection.RemoteIpAddress.ToString()
 			};
 
-			InfectedItems.Add(infectedEntity);
+			dbContext.InfectedDbSet.Add(infectedEntity);
+			dbContext.SaveChanges();
 
 			return infectedEntity.Id;
 		}
@@ -33,7 +42,7 @@ namespace UkazkaWebApi.Controllers
 		[HttpPut("api/infected/{id:int}")]
 		public InfectedVM UpdateInfected(int id, [FromBody] InfectedIM inputModel)
 		{
-			var item = InfectedItems.FirstOrDefault(item => item.Id == id);
+			var item = dbContext.InfectedDbSet.FirstOrDefault(item => item.Id == id);
 			if (item == null)
 			{
 				return null;
@@ -42,7 +51,7 @@ namespace UkazkaWebApi.Controllers
 			item.City = inputModel.City;
 			item.TestDate = inputModel.TestDate;
 			item.ClientIpAddress = this.HttpContext.Connection.RemoteIpAddress.ToString();
-			// EF: dbContext.SaveChanges()
+			dbContext.SaveChanges();
 
 			return MapToInfectedVM(item);
 
@@ -51,13 +60,13 @@ namespace UkazkaWebApi.Controllers
 		[HttpGet("api/infected")]
 		public List<InfectedVM> GetInfectedList()
 		{
-			return InfectedItems.Select(item => MapToInfectedVM(item)).ToList();
+			return dbContext.InfectedDbSet.Select(item => MapToInfectedVM(item)).ToList();
 		}
 
 		[HttpGet("api/infected/{id:int}")]
 		public InfectedVM GetInfectedItem(int id)
 		{
-			return InfectedItems
+			return dbContext.InfectedDbSet
 				.Where(item => item.Id == id)
 				.Select(item => MapToInfectedVM(item)).FirstOrDefault();
 		}
